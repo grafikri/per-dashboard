@@ -2,9 +2,9 @@
   <div class="">
     <h1 class="py-5 text-2xl">Charts</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-      <div v-for="item in [1,2,3,4,5,6,7,8,9]" :key="item.id">
+      <div v-for="(item,index) in items" :key="index">
         <div class="shadow p-3">
-          <basic-line-chart title="This is title" :dataSet="items" />
+          <basic-line-chart :title="item.title" :dataSet="item.data" />
         </div>
       </div>
     </div>
@@ -13,31 +13,49 @@
 </template>
 
 <script>
+
+import { mapActions, mapGetters } from 'vuex';
 import BasicLineChart from '../components/BasicLineChart.vue';
 
 export default {
   name: 'Home',
-  data() {
-    return {
-      items: [
+  computed: {
+    ...mapGetters('analytics', [
+      'ttfb',
+      'fcb',
+    ]),
+    items() {
+      return [
         {
-          label: 'Red',
-          value: 252,
+          title: 'TTFB',
+          data: this.ttfb.map((item) => ({
+            label: (new Date(item.timestamp)).toLocaleString(),
+            value: item.value,
+          })),
         },
         {
-          label: 'Blue',
-          value: 19,
+          title: 'FCB',
+          data: this.fcb.map((item) => ({
+            label: (new Date(item.timestamp)).toLocaleString(),
+            value: item.value,
+          })),
         },
-        {
-          label: 'Yellow',
-          value: 3,
-        },
-        {
-          label: 'Green',
-          value: 5,
-        },
-      ],
-    };
+      ];
+    },
+  },
+  mounted() {
+    this.fetchData();
+    this.intervalId = setInterval(() => {
+      this.fetchData();
+    }, process.env.VUE_APP_CHART_REFRESH_TIME ?? 5000);
+  },
+  beforeDestroy() {
+    clearInterval(this.intervalId);
+  },
+  methods: {
+    ...mapActions('analytics', [
+      'fetchData',
+    ]),
   },
   components: {
     BasicLineChart,
