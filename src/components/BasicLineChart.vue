@@ -24,7 +24,7 @@ export default {
     };
   },
   mounted() {
-    this.chart = new Chart(this.$refs.chartArea, config);
+    this.chart = new Chart(this.$refs.chartArea, { ...config });
     this.updateChartData(this.dataSet);
   },
   methods: {
