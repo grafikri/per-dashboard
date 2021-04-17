@@ -47,8 +47,10 @@ const mutations = {
 
 const actions = {
   async fetchData({ commit }) {
+    const startDate = (Date.now() - (1000 * 60 * 30)); // to 30 minutes earlier
+
     // @ts-ignore
-    const response = Object.values(await chartApi.$get('/analytics'));
+    const response = Object.values(await chartApi.$get(`/analytics?startDate=${startDate}`));
 
     /**
      * @type {Analytic[]}
