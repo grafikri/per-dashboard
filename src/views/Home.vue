@@ -45,6 +45,12 @@ export default {
   },
   mounted() {
     this.fetchData();
+    this.intervalId = setInterval(() => {
+      this.fetchData();
+    }, process.env.VUE_APP_CHART_REFRESH_TIME ?? 5000);
+  },
+  beforeDestroy() {
+    clearInterval(this.intervalId);
   },
   methods: {
     ...mapActions('analytics', [
