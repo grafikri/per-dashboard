@@ -49,7 +49,7 @@ export default {
     },
   },
   watch: {
-    items(items) {
+    dataSet(items) {
       this.updateChartData(items);
     },
   },
