@@ -1,18 +1,46 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="">
+    <h1 class="py-5 text-2xl">Charts</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+      <div v-for="item in [1,2,3,4,5,6,7,8,9]" :key="item.id">
+        <div class="shadow p-3">
+          <basic-line-chart title="This is title" :dataSet="items" />
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import BasicLineChart from '../components/BasicLineChart.vue';
 
 export default {
   name: 'Home',
+  data() {
+    return {
+      items: [
+        {
+          label: 'Red',
+          value: 252,
+        },
+        {
+          label: 'Blue',
+          value: 19,
+        },
+        {
+          label: 'Yellow',
+          value: 3,
+        },
+        {
+          label: 'Green',
+          value: 5,
+        },
+      ],
+    };
+  },
   components: {
-    HelloWorld,
+    BasicLineChart,
   },
 };
 </script>
