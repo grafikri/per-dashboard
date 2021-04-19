@@ -33,6 +33,8 @@ const getters = {
   fcp: (mState) => mState.list.find((item) => item.type === AnalyticDataType.FCP)?.data ?? [],
   domLoading:
     (mState) => mState.list.find((item) => item.type === AnalyticDataType.DOM_LOADING)?.data ?? [],
+  pageLoading:
+    (mState) => mState.list.find((item) => item.type === AnalyticDataType.PAGE_LOADING)?.data ?? [],
 
 };
 
@@ -75,6 +77,13 @@ const actions = {
       },
       {
         type: AnalyticDataType.DOM_LOADING,
+        data: response.map((item) => ({
+          timestamp: item.date,
+          value: item.domLoading,
+        })),
+      },
+      {
+        type: AnalyticDataType.PAGE_LOADING,
         data: response.map((item) => ({
           timestamp: item.date,
           value: item.domLoading,
