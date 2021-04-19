@@ -1,6 +1,7 @@
 <template>
   <div class="">
-    <h1 class="py-5 text-2xl">Charts</h1>
+    <h1 class="py-3 text-2xl">Charts</h1>
+    <p class="pb-3">Data for the last 30 minutes are displayed.</p>
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
       <div v-for="(item,index) in items" :key="index">
         <div class="shadow p-3">
@@ -22,7 +23,8 @@ export default {
   computed: {
     ...mapGetters('analytics', [
       'ttfb',
-      'fcb',
+      'fcp',
+      'domLoading',
     ]),
     items() {
       return [
@@ -34,8 +36,15 @@ export default {
           })),
         },
         {
-          title: 'FCB',
-          data: this.fcb.map((item) => ({
+          title: 'FCP',
+          data: this.fcp.map((item) => ({
+            label: (new Date(item.timestamp)).toLocaleString(),
+            value: item.value,
+          })),
+        },
+        {
+          title: 'DOM LOADING',
+          data: this.domLoading.map((item) => ({
             label: (new Date(item.timestamp)).toLocaleString(),
             value: item.value,
           })),

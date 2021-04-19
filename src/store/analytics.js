@@ -30,7 +30,10 @@ const getters = {
    * @returns {Data[]}
    */
   ttfb: (mState) => mState.list.find((item) => item.type === AnalyticDataType.TTFB)?.data ?? [],
-  fcb: (mState) => mState.list.find((item) => item.type === AnalyticDataType.FCB)?.data ?? [],
+  fcp: (mState) => mState.list.find((item) => item.type === AnalyticDataType.FCP)?.data ?? [],
+  domLoading:
+    (mState) => mState.list.find((item) => item.type === AnalyticDataType.DOM_LOADING)?.data ?? [],
+
 };
 
 const mutations = {
@@ -64,7 +67,14 @@ const actions = {
         })),
       },
       {
-        type: AnalyticDataType.FCB,
+        type: AnalyticDataType.FCP,
+        data: response.map((item) => ({
+          timestamp: item.date,
+          value: item.fcp,
+        })),
+      },
+      {
+        type: AnalyticDataType.DOM_LOADING,
         data: response.map((item) => ({
           timestamp: item.date,
           value: item.domLoading,

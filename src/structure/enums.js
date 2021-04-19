@@ -5,5 +5,6 @@
  */
 export const AnalyticDataType = {
   TTFB: 0,
-  FCB: 1,
+  FCP: 1,
+  DOM_LOADING: 2,
 };
